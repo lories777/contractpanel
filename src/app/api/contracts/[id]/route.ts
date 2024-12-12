@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../lib/prisma";
 
-type RouteContext = {
-  params: {
-    id: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 export async function GET(
   request: NextRequest,
-  { params, searchParams }: RouteContext
-): Promise<Response> {
+  { params }: { params: { id: string } }
+) {
   try {
     const contract = await prisma.contract.findUnique({
       where: { id: params.id },
@@ -34,8 +27,8 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params, searchParams }: RouteContext
-): Promise<Response> {
+  { params }: { params: { id: string } }
+) {
   try {
     await prisma.contract.delete({
       where: { id: params.id },

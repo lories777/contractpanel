@@ -18,17 +18,10 @@ interface TextOptions {
   maxWidth?: number;
 }
 
-type RouteContext = {
-  params: {
-    id: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 export async function GET(
   request: NextRequest,
-  { params, searchParams }: RouteContext
-): Promise<Response> {
+  { params }: { params: { id: string } }
+) {
   try {
     const id = params.id;
     const contract = await prisma.contract.findUnique({
@@ -40,7 +33,8 @@ export async function GET(
       return NextResponse.json({ error: 'Contract or contractor data not found' }, { status: 404 });
     }
 
-    // Create PDF document
+    // Rest of the PDF generation code...
+    // [Previous PDF generation code remains exactly the same]
     const doc = new jsPDF({ format: 'a4', unit: 'mm' });
     const margin = 20;
     const pageWidth = doc.internal.pageSize.getWidth();
