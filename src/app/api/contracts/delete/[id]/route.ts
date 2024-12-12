@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 
+type RouteContext = {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params, searchParams }: RouteContext
 ): Promise<Response> {
-  if (!context.params.id) {
+  if (!params.id) {
     return NextResponse.json(
       { error: 'Contract ID is required' },
       { status: 400 }
@@ -13,7 +20,7 @@ export async function DELETE(
   }
 
   try {
-    const id = context.params.id;
+    const id = params.id;
     
     // Check if contract exists
     const contract = await prisma.contract.findUnique({

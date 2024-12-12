@@ -18,12 +18,19 @@ interface TextOptions {
   maxWidth?: number;
 }
 
+type RouteContext = {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params, searchParams }: RouteContext
 ): Promise<Response> {
   try {
-    const id = context.params.id;
+    const id = params.id;
     const contract = await prisma.contract.findUnique({
       where: { id },
       include: { contractorData: true },
