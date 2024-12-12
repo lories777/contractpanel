@@ -19,7 +19,7 @@ interface TextOptions {
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -33,8 +33,7 @@ export async function GET(
       return NextResponse.json({ error: 'Contract or contractor data not found' }, { status: 404 });
     }
 
-    // Rest of the PDF generation code...
-    // [Previous PDF generation code remains exactly the same]
+    // Create PDF document
     const doc = new jsPDF({ format: 'a4', unit: 'mm' });
     const margin = 20;
     const pageWidth = doc.internal.pageSize.getWidth();

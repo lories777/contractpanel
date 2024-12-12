@@ -3,7 +3,7 @@ import prisma from "../../../lib/prisma";
 import { ContractData } from "../../../types/contract";
 import { Prisma } from "@prisma/client";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const contracts = await prisma.contract.findMany({
       include: {
