@@ -1,9 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 
+type Props = {
+  params: { id: string }
+}
+
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: Props
 ): Promise<Response> {
   if (!params.id) {
     return NextResponse.json(

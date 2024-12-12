@@ -1,9 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../lib/prisma";
 
+type Props = {
+  params: { id: string }
+}
+
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: Props
 ): Promise<Response> {
   try {
     const contract = await prisma.contract.findUnique({
@@ -26,8 +30,8 @@ export async function GET(
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: Props
 ): Promise<Response> {
   try {
     await prisma.contract.delete({

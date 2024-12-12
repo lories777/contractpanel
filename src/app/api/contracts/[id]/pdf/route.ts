@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 import { jsPDF } from 'jspdf';
 import { Contract, ContractorData } from '@prisma/client';
@@ -18,9 +18,13 @@ interface TextOptions {
   maxWidth?: number;
 }
 
+type Props = {
+  params: { id: string }
+}
+
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: Props
 ): Promise<Response> {
   try {
     const id = params.id;
