@@ -21,6 +21,8 @@
     "@types/react-dom": "^18",
     "@types/react-pdf": "^6.2.0",
     "chrome-aws-lambda": "^6.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
     "html-pdf": "^3.0.1",
     "html-pdf-node": "^1.0.8",
     "html-to-pdf-js": "^0.9.3",
@@ -39,8 +41,5 @@
     "typescript": "^5",
     "yup": "^1.4.0"
   },
-  "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "15.0.3"
-  }
+  "devDependencies": {}
 }

@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
-  if (!params.id) {
+  if (!context.params.id) {
     return NextResponse.json(
       { error: 'Contract ID is required' },
       { status: 400 }
@@ -13,7 +13,7 @@ export async function DELETE(
   }
 
   try {
-    const id = params.id;
+    const id = context.params.id;
     
     // Check if contract exists
     const contract = await prisma.contract.findUnique({

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 import { jsPDF } from 'jspdf';
 import { Contract, ContractorData } from '@prisma/client';
@@ -19,12 +19,11 @@ interface TextOptions {
 }
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
-    // Await params.id to fix Next.js error
-    const id = await Promise.resolve(params.id);
+    const id = context.params.id;
     const contract = await prisma.contract.findUnique({
       where: { id },
       include: { contractorData: true },
