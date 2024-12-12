@@ -41,5 +41,8 @@
     "typescript": "^5",
     "yup": "^1.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0"
+  }
 }
