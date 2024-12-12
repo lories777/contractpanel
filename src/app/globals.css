@@ -3,19 +3,112 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 243, 244, 246;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+/* Style dla inputów */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  @apply border-blue-500 ring-blue-500;
+}
+
+/* Style dla przycisków */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+}
+
+/* Style dla alertów */
+.alert {
+  @apply p-4 rounded-md mb-4;
+}
+
+.alert-success {
+  @apply bg-green-50 text-green-800;
+}
+
+.alert-error {
+  @apply bg-red-50 text-red-800;
+}
+
+/* Style dla kart */
+.card {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+/* Style dla nagłówków */
+h1 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+h2 {
+  @apply text-xl font-bold text-gray-900;
+}
+
+/* Style dla etykiet formularza */
+label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+/* Style dla komunikatów o błędach */
+.error-message {
+  @apply mt-1 text-sm text-red-600;
+}
+
+/* Style dla checkboxów */
+input[type="checkbox"] {
+  @apply h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500;
+}
+
+/* Style dla kontenera strony */
+.page-container {
+  @apply min-h-screen bg-gray-100 py-8;
+}
+
+/* Style dla głównego kontenera */
+.main-container {
+  @apply max-w-4xl mx-auto;
+}
+
+/* Style dla sekcji */
+.section {
+  @apply space-y-6;
+}
+
+/* Style dla gridów */
+.grid-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+/* Style dla list */
+.list {
+  @apply space-y-4;
+}
+
+.list-item {
+  @apply border rounded-lg p-4;
 }

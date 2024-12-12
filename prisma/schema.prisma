@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Contract {
+  id                String   @id @default(uuid())
+  status           String   @default("draft") // draft, pending, completed
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Company data
+  contractDate     String
+  companyType      String // PC_Beskidy, Paris_Cosmetics
+  companyAddress   String
+  companyNIP       String
+
+  // Work scope
+  workScope        String   @default("")
+
+  // Authorization text
+  authorizationText String @default("The Contractor shall use his own materials and tools to complete the work. The Contractor, in exchange for the remuneration specified in § 4, shall authorize the use of the aforementioned materials for the promotion of the Ordering Party in the Ordering Party's social channels and promotional materials.")
+
+  // Dates and remuneration
+  startDate        String
+  endDate          String
+  remuneration     Float
+  remunerationText String @default("For the performance of the work, the Contractor shall receive a lump sum remuneration in the amount of 450 euros net, in words: four hundred and fifty euros net, payable within 14 days from the date of completion of the work and its acceptance by the Contracting Authority.")
+
+  // Contractor data
+  contractorData   ContractorData? @relation(fields: [contractorDataId], references: [id], onDelete: SetNull)
+  contractorDataId String?
+}
+
+model ContractorData {
+  id              String    @id @default(uuid())
+  fullName        String
+  address         String
+  birthDate       String?
+  birthPlace      String?
+  idNumber        String?
+  bankAccount     String    // Format: 2 letters + 22 digits
+  contracts       Contract[]
+}
