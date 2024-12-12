@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { ContractData } from "../../../types/contract";
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export async function GET() {
   try {
@@ -39,9 +39,9 @@ export async function POST(request: NextRequest) {
       : "6372211771";
 
     // Create contract using transaction
-    const contract = await prisma.$transaction(async (prisma) => {
+    const contract = await prisma.$transaction(async (tx: Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'>) => {
       // Create contract
-      const newContract = await prisma.contract.create({
+      const newContract = await tx.contract.create({
         data: {
           contractDate: data.contractDate,
           companyType: data.companyType,
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Return the created contract with relations
-      return await prisma.contract.findUnique({
+      return await tx.contract.findUnique({
         where: { id: newContract.id },
         include: {
           contractorData: true,

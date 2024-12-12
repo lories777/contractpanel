@@ -6,31 +6,57 @@ declare module 'pdfmake/build/pdfmake' {
     bolditalics?: string;
   }
 
+  interface TDocumentInformation {
+    title?: string;
+    author?: string;
+    subject?: string;
+    keywords?: string;
+    creator?: string;
+    producer?: string;
+    creationDate?: Date;
+    modDate?: Date;
+    trapped?: unknown;
+  }
+
   interface TDocumentDefinitions {
-    content: any[];
-    styles?: Record<string, any>;
-    defaultStyle?: Record<string, any>;
-  }
-
-  interface TCreatedPdf {
-    getBuffer(callback: (buffer: Buffer) => void): void;
-  }
-
-  interface PdfMakeStatic {
-    vfs: Record<string, any>;
-    fonts: Record<string, TFontFamily>;
-    createPdf(documentDefinition: TDocumentDefinitions): TCreatedPdf;
-  }
-
-  const pdfMake: PdfMakeStatic;
-  export default pdfMake;
-}
-
-declare module 'pdfmake/build/vfs_fonts' {
-  const vfs: {
-    pdfMake: {
-      vfs: Record<string, any>;
+    content: unknown[];
+    styles?: Record<string, unknown>;
+    images?: Record<string, unknown>;
+    defaultStyle?: {
+      font?: string;
     };
-  };
-  export default vfs;
+    pageSize?: string;
+    pageOrientation?: 'portrait' | 'landscape';
+    pageMargins?: [number, number, number, number];
+    info?: TDocumentInformation;
+    compress?: boolean;
+    userPassword?: string;
+    ownerPassword?: string;
+    permissions?: {
+      printing?: 'highResolution' | 'lowResolution';
+      modifying?: boolean;
+      copying?: boolean;
+      annotating?: boolean;
+      fillingForms?: boolean;
+      contentAccessibility?: boolean;
+      documentAssembly?: boolean;
+    };
+    version?: string;
+    watermark?: unknown;
+  }
+
+  interface PDFMake {
+    createPdf(documentDefinitions: TDocumentDefinitions): {
+      download(defaultFileName?: string, cb?: () => void): void;
+      getDataUrl(cb: (result: string) => void): void;
+      getBlob(cb: (result: Blob) => void): void;
+    };
+    vfs: Record<string, string>;
+    fonts: {
+      [name: string]: TFontFamily;
+    };
+  }
+
+  const pdfMake: PDFMake;
+  export = pdfMake;
 }
