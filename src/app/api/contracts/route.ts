@@ -39,9 +39,9 @@ export async function POST(request: NextRequest) {
       : "6372211771";
 
     // Create contract using transaction
-    const contract = await prisma.$transaction(async (tx) => {
+    const contract = await prisma.$transaction(async (prisma) => {
       // Create contract
-      const newContract = await tx.contract.create({
+      const newContract = await prisma.contract.create({
         data: {
           contractDate: data.contractDate,
           companyType: data.companyType,
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Return the created contract with relations
-      return await tx.contract.findUnique({
+      return await prisma.contract.findUnique({
         where: { id: newContract.id },
         include: {
           contractorData: true,

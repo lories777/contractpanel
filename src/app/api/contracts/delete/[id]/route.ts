@@ -35,10 +35,10 @@ export async function DELETE(
     });
 
     return NextResponse.json({ message: 'Contract deleted successfully' });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error deleting contract:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to delete contract' },
+      { error: error instanceof Error ? error.message : 'Failed to delete contract' },
       { status: 500 }
     );
   }

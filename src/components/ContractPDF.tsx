@@ -64,7 +64,7 @@ const ContractContent = ({ contract }: { contract: Contract }) => (
         {contract.companyAddress}{'\n'}
         NIP: {contract.companyNIP}
       </Text>
-      <Text style={styles.text}>zwanym dalej "Zamawiającym"</Text>
+      <Text style={styles.text}>zwanym dalej &quot;Zamawiającym&quot;</Text>
     </View>
 
     <View style={styles.section}>
@@ -78,7 +78,7 @@ const ContractContent = ({ contract }: { contract: Contract }) => (
           {contract.contractorData.address}{'\n'}
           Nr konta: {contract.contractorData.bankAccount}
         </Text>
-        <Text style={styles.text}>zwanym dalej "Wykonawcą"</Text>
+        <Text style={styles.text}>zwanym dalej &quot;Wykonawcą&quot;</Text>
       </View>
     )}
 
@@ -86,8 +86,7 @@ const ContractContent = ({ contract }: { contract: Contract }) => (
       <Text style={styles.label}>§ 1</Text>
       <Text>
         Wykonawca zobowiązuje się do wykonania następujących prac:{'\n'}
-        {contract.workScope.tiktok && '- TikTok + boost\n'}
-        {contract.workScope.promotionalMaterial && '- Materiał promocyjny'}
+        {contract.workScope}
       </Text>
     </View>
 
