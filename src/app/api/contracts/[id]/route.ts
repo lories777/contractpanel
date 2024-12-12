@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import prisma from "../../../../lib/prisma";
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const contract = await prisma.contract.findUnique({
       where: { id: params.id },
@@ -22,7 +25,10 @@ export async function GET({ params }: { params: { id: string } }) {
   }
 }
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     await prisma.contract.delete({
       where: { id: params.id },

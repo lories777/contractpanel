@@ -18,7 +18,10 @@ interface TextOptions {
   maxWidth?: number;
 }
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const id = params.id;
     const contract = await prisma.contract.findUnique({

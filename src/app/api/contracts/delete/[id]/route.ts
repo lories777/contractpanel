@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   if (!params.id) {
     return NextResponse.json(
       { error: 'Contract ID is required' },

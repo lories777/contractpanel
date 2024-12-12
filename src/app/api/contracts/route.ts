@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { ContractData } from "../../../types/contract";
 import { Prisma } from "@prisma/client";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const contracts = await prisma.contract.findMany({
       include: {
@@ -24,7 +24,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const data: ContractData = await request.json();
     console.log('Received contract data:', data);
