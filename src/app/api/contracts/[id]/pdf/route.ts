@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 import { jsPDF } from 'jspdf';
 import { Contract, ContractorData } from '@prisma/client';
@@ -18,10 +18,7 @@ interface TextOptions {
   maxWidth?: number;
 }
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET({ params }: { params: { id: string } }) {
   try {
     const id = params.id;
     const contract = await prisma.contract.findUnique({
