@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from "../../../../lib/prisma";
 
-type Props = {
-  params: { id: string }
-}
-
 export async function GET(
-  req: NextRequest,
-  { params }: Props
+  request: NextRequest,
+  context: { params: { id: string } }
 ): Promise<Response> {
   try {
     const contract = await prisma.contract.findUnique({
-      where: { id: params.id },
+      where: { id: context.params.id },
       include: { contractorData: true },
     });
 
@@ -30,12 +26,12 @@ export async function GET(
 }
 
 export async function DELETE(
-  req: NextRequest,
-  { params }: Props
+  request: NextRequest,
+  context: { params: { id: string } }
 ): Promise<Response> {
   try {
     await prisma.contract.delete({
-      where: { id: params.id },
+      where: { id: context.params.id },
     });
 
     return NextResponse.json({ success: true });
