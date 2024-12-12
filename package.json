@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "./node_modules/.bin/prisma generate && ./node_modules/.bin/prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "./node_modules/.bin/prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -26,6 +26,7 @@
     "pdf-lib": "^1.17.1",
     "pdfkit": "^0.15.1",
     "pdfmake": "^0.2.15",
+    "prisma": "^5.22.0",
     "puppeteer-core": "^23.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -39,7 +40,6 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
-    "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
