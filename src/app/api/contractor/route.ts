@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { ContractorData } from "../../../types/contract";
 
@@ -6,7 +6,7 @@ interface ContractorRequest extends ContractorData {
   contractId: string;
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request): Promise<Response> {
   try {
     const data: ContractorRequest = await request.json();
     

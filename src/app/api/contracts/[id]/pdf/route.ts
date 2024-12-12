@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from "../../../../../lib/prisma";
 import { jsPDF } from 'jspdf';
 import { Contract, ContractorData } from '@prisma/client';
@@ -19,11 +19,11 @@ interface TextOptions {
 }
 
 export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+  request: Request,
+  { params }: { params: { id: string } }
+): Promise<Response> {
   try {
-    const id = context.params.id;
+    const id = params.id;
     const contract = await prisma.contract.findUnique({
       where: { id },
       include: { contractorData: true },
@@ -38,7 +38,7 @@ export async function GET(
     const margin = 20;
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const lineHeight = 6; // Reduced from 7
+    const lineHeight = 6;
     
     // Get logo data
     const logoPath = path.join(process.cwd(), 'unnamed.png');
@@ -50,7 +50,7 @@ export async function GET(
     const aspectRatio = metadata.width! / metadata.height!;
     
     // Set logo dimensions maintaining aspect ratio
-    const logoHeight = 15; // mm
+    const logoHeight = 15;
     const logoWidth = logoHeight * aspectRatio;
 
     // Function to add logo to current page
@@ -62,12 +62,12 @@ export async function GET(
     addLogoToPage();
 
     // Start content below logo
-    let y = margin + logoHeight + 5; // Reduced padding after logo
+    let y = margin + logoHeight + 5;
     let currentPage = 1;
 
     // Helper to handle page overflow and add bold text
     const addTextWithOverflow = (text: string, y: number, options: TextOptions = {}) => {
-      const maxY = pageHeight - 35; // Reduced bottom margin
+      const maxY = pageHeight - 35;
       const maxWidth = options.maxWidth || pageWidth - margin * 2;
       const x = options.align === 'center' ? pageWidth / 2 : margin;
 
@@ -83,10 +83,10 @@ export async function GET(
           if (y >= maxY) {
             doc.addPage();
             currentPage++;
-            if (currentPage <= 2) { // Add logo only on first two pages
+            if (currentPage <= 2) {
               addLogoToPage();
             }
-            y = currentPage <= 2 ? margin + logoHeight + 5 : margin; // Adjust starting position based on logo presence
+            y = currentPage <= 2 ? margin + logoHeight + 5 : margin;
           }
           doc.text(splitText[i], x, y, { align: options.align || 'left' });
           y += lineHeight;
@@ -95,10 +95,10 @@ export async function GET(
         if (y >= maxY) {
           doc.addPage();
           currentPage++;
-          if (currentPage <= 2) { // Add logo only on first two pages
+          if (currentPage <= 2) {
             addLogoToPage();
           }
-          y = currentPage <= 2 ? margin + logoHeight + 5 : margin; // Adjust starting position based on logo presence
+          y = currentPage <= 2 ? margin + logoHeight + 5 : margin;
         }
         doc.text(text, x, y, { align: options.align || 'left' });
         y += lineHeight;
@@ -107,12 +107,12 @@ export async function GET(
     };
 
     // Title
-    doc.setFontSize(14); // Reduced from 16
+    doc.setFontSize(14);
     y = addTextWithOverflow('Contract', y, { align: 'center', bold: true });
     y += lineHeight;
 
     // Contract details
-    doc.setFontSize(10); // Reduced from 12
+    doc.setFontSize(10);
     y = addTextWithOverflow(`Concluded on ${contract.contractDate} in ${contract.companyType === 'PC_Beskidy' ? 'Bukowno' : 'Paris'} between:`, y);
     y += lineHeight;
 
@@ -145,7 +145,7 @@ export async function GET(
     const workScopeLines = contract.workScope.split('\n');
     workScopeLines.forEach(line => {
       if (line.trim()) {
-        y = addTextWithOverflow(`- ${line.trim()}`, y); // Adding bullet point
+        y = addTextWithOverflow(`- ${line.trim()}`, y);
       }
     });
     y = addTextWithOverflow('hereinafter referred to as the Work.', y);
@@ -188,8 +188,8 @@ export async function GET(
     y += lineHeight * 3;
 
     // Signatures
-    const signatureY = pageHeight - 25; // Reduced from 30
-    const dotsY = signatureY - 8; // Reduced from 10
+    const signatureY = pageHeight - 25;
+    const dotsY = signatureY - 8;
     const textY = signatureY + 5;
 
     // Add dots for signatures

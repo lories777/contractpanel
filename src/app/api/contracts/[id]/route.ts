@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from "../../../../lib/prisma";
 
 export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+  request: Request,
+  { params }: { params: { id: string } }
+): Promise<Response> {
   try {
     const contract = await prisma.contract.findUnique({
-      where: { id: context.params.id },
+      where: { id: params.id },
       include: { contractorData: true },
     });
 
@@ -26,12 +26,12 @@ export async function GET(
 }
 
 export async function DELETE(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+  request: Request,
+  { params }: { params: { id: string } }
+): Promise<Response> {
   try {
     await prisma.contract.delete({
-      where: { id: context.params.id },
+      where: { id: params.id },
     });
 
     return NextResponse.json({ success: true });
