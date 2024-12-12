@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import prisma from "../../../../../lib/prisma";
 import { jsPDF } from 'jspdf';
 import { Contract, ContractorData } from '@prisma/client';
 import fs from 'fs';

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { ContractorData } from "@/types/contract";
+import prisma from "../../../lib/prisma";
+import { ContractorData } from "../../../types/contract";
 
 interface ContractorRequest extends ContractorData {
   contractId: string;

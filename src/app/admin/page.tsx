@@ -1,7 +1,7 @@
 'use client';
 
-import AdminContractForm from "@/components/AdminContractForm";
-import { ContractData, Contract } from "@/types/contract";
+import AdminContractForm from "../../components/AdminContractForm";
+import { ContractData, Contract } from "../../types/contract";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import ContractorForm from '@/components/ContractorForm';
+import ContractorForm from "../../components/ContractorForm";
 import Link from 'next/link';
 
 export default function ContractorPage() {
